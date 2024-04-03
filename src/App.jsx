@@ -5,11 +5,22 @@ import "./App.css"
 
 const App = () => {
     const [input, setInput] = useState("")
-    const [todos, setTodos] = useState([{txt: "Create Todo", id: uuidv4()}])
+    const [todos, setTodos] = useState([{txt: "Create Todo", completed: false, id: uuidv4()}])
 
     const handleInput = (e) => {
         setInput(e.target.value)
         // console.log(input)
+    }
+
+    const handleCheckBox = (id) => {
+        const newTodo = todos.map((todo) => {
+            if(todo.id == id){
+                todo.completed = !todo.completed
+            }
+            return todo
+        })
+        console.log(newTodo)
+        setTodos(newTodo)
     }
 
     const addTodo = () => {
@@ -18,7 +29,7 @@ const App = () => {
         // setTodos(newTodos)
 
         /** ANOTHER WAY */
-        setTodos((prevTodos) => [...prevTodos, {txt: input, id: uuidv4()}])
+        setTodos((prevTodos) => [...prevTodos, {txt: input, completed: false, id: uuidv4()}])
 
         setInput("")
 
@@ -27,9 +38,7 @@ const App = () => {
 
     const deleteTodo = (id) => {
         const newTodo = todos.filter((todo) => todo.id != id)
-        // console.log(newTodo)
         setTodos(newTodo)
-        // console.log("Delete")
     }
 
     // console.log("RENDER TiMe: ", todos)
@@ -44,7 +53,10 @@ const App = () => {
                 <div className="todo-wrapper flex">
                     {todos.map((todo) => (
                         <div key={todo.id} className="todo flex">
-                            <div className="todoTxt">{todo.txt}</div>
+                            <div className="info-wrapper flex">
+                                <input type="checkbox" onChange={(e) => handleCheckBox(todo.id)} checked={todo.completed ? true : false} />
+                                <div className={`todoTxt ${todo.completed ? "completed" : "" }`}>{todo.txt}</div>
+                            </div>
                             <div className="btn-wrapper flex">
                                 <button className="editBtn btn">Edit</button>
                                 <button onClick={(e) => deleteTodo(todo.id)} className="deleteBtn btn">Delete</button>

@@ -67,6 +67,20 @@
             background-color: white;
             border-radius: var(--main-br);
 
+            & .info-wrapper{
+                gap: 5px;
+                align-items: center;
+
+                & input[type="checkbox"]{
+                    cursor: pointer;
+                }
+
+                & .todoTxt.completed{
+                    text-decoration: line-through;
+                    color: #5c5c5c;
+                }
+            }
+
             & .btn-wrapper{
                 gap: 8px;
             }
