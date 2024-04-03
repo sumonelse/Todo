@@ -25,10 +25,8 @@ const App = () => {
         // console.log(todos)
     }
 
-    const deleteTodo = (e) => {
-        // console.log(e.target.parentNode.parentNode.querySelector(".todoTxt").innerHTML)
-        const txt = e.target.parentNode.parentNode.querySelector(".todoTxt").innerHTML
-        const newTodo = todos.filter((todo) => todo.txt != txt)
+    const deleteTodo = (id) => {
+        const newTodo = todos.filter((todo) => todo.id != id)
         // console.log(newTodo)
         setTodos(newTodo)
         // console.log("Delete")
@@ -49,7 +47,7 @@ const App = () => {
                             <div className="todoTxt">{todo.txt}</div>
                             <div className="btn-wrapper flex">
                                 <button className="editBtn btn">Edit</button>
-                                <button onClick={(e) => deleteTodo(e)} className="deleteBtn btn">Delete</button>
+                                <button onClick={(e) => deleteTodo(todo.id)} className="deleteBtn btn">Delete</button>
                             </div>
                         </div>
                     ))}
