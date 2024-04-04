@@ -9,18 +9,16 @@ const App = () => {
 
     const handleInput = (e) => {
         setInput(e.target.value)
-        // console.log(input)
     }
 
     const handleCheckBox = (id) => {
-        const newTodo = todos.map((todo) => {
+        const newTodos = todos.map((todo) => {
             if(todo.id == id){
                 todo.completed = !todo.completed
             }
             return todo
         })
-        console.log(newTodo)
-        setTodos(newTodo)
+        setTodos(newTodos)
     }
 
     const addTodo = () => {
@@ -32,13 +30,28 @@ const App = () => {
         setTodos((prevTodos) => [...prevTodos, {txt: input, completed: false, id: uuidv4()}])
 
         setInput("")
-
         // console.log(todos)
     }
 
+    // const updateTodo = (id, txt) => {
+    //     const newTodos = todos.map((todo) => {
+    //         if(todo.id == id){
+    //             todo.txt = txt
+    //         }
+    //         return todo
+    //     })
+    //     setTodos(newTodos)
+    // }
+
+    const editTodo = (id, txt) => {
+        const todoTxt = txt
+        setInput(txt)
+        deleteTodo(id)
+    }
+
     const deleteTodo = (id) => {
-        const newTodo = todos.filter((todo) => todo.id != id)
-        setTodos(newTodo)
+        const newTodos = todos.filter((todo) => todo.id != id)
+        setTodos(newTodos)
     }
 
     // console.log("RENDER TiMe: ", todos)
@@ -49,6 +62,8 @@ const App = () => {
                 <div className="input-wrapper flex">
                     <input type="text" onChange={(e) => handleInput(e)} value={input} placeholder="e.g. Write some Code :)"/>
                     <button onClick={addTodo} className="btn">Add</button>
+                    {/* <button onClick={updateTodo} className="btn">Update</button>
+                    <button onClick={() => setInput("")} className="btn">Cancel</button> */}
                 </div>
                 <div className="todo-wrapper flex">
                     {todos.map((todo) => (
@@ -58,8 +73,8 @@ const App = () => {
                                 <div className={`todoTxt ${todo.completed ? "completed" : "" }`}>{todo.txt}</div>
                             </div>
                             <div className="btn-wrapper flex">
-                                <button className="editBtn btn">Edit</button>
-                                <button onClick={(e) => deleteTodo(todo.id)} className="deleteBtn btn">Delete</button>
+                                <button onClick={() => editTodo(todo.id, todo.txt)} className="editBtn btn">Edit</button>
+                                <button onClick={() => deleteTodo(todo.id)} className="deleteBtn btn">Delete</button>
                             </div>
                         </div>
                     ))}
